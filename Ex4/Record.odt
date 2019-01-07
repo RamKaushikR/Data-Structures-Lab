@@ -1,0 +1,456 @@
+﻿
+#include<stdio.h>
+int enque(int a[], int f, int *r, int s)
+{
+  if((*r)!=s-1)
+  {  
+    int b;
+    scanf("%d",&b);
+    (*r)++;
+    a[(*r)]=b;
+    if(f==-1)
+      f++;
+  }
+  printf("Rear: %d\n",a[*r]);
+  return f;
+}
+int deque(int a[], int f, int *r)
+{
+  if(f!=-1)
+  {
+    if((*r)==f)
+    {
+      f=-1;
+      *r=-1;
+    }
+    else
+    {
+      f++;
+      printf("Front: %d\n",a[f]);
+    }
+  }
+  return f;
+}
+void main()
+{
+  int f=-1,r=-1,a[3],c;
+  printf("1.Add 2.Delete 3.Exit\n");
+  scanf("%d",&c);
+  while(1)
+  {
+    if(c==1)
+    {
+      f=enque(a,f,&r,3);
+      if(r==2)
+	printf("Queue is full\n");
+    }
+    else if(c==2)
+    {
+      f=deque(a,f,&r);
+      if(f==-1)
+	printf("Queue is empty\n");
+    }
+    else if(c==3)
+      break;
+    printf("1.Add 2.Delete 3.Exit\n");
+    scanf("%d",&c);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+  int key;
+  struct node *next;
+};
+typedef struct node Node;
+Node *getnode()
+{
+  return (Node *)malloc(sizeof(Node));
+}
+void enque(Node **front, Node **rear)
+{
+  Node *t;
+  int n;
+  scanf("%d",&n);
+  while(n!=-1)
+  {
+    t=getnode();
+    t->key=n;
+    t->next=NULL;
+    if((*front)==NULL)
+    {
+      (*front)=t;
+      (*rear)=t;
+    }
+    else
+    {
+      (*rear)->next=t;
+      (*rear)=t;
+    }
+    scanf("%d",&n);
+  }
+  printf("Rear=%d\n",(*rear)->key);
+}
+void deque(Node **front)
+{
+  Node *p;
+  while((*front)!=NULL)
+  {
+    p=*front;
+    printf("Front=%d\n",(*front)->key);
+    (*front)=(*front)->next;
+    free(p);
+  }
+} 
+int main()
+{
+  Node *front=NULL,*rear=NULL;
+  enque(&front,&rear);
+  printf("Add elements\n");
+  enque(&front,&rear);
+  deque(&front);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+  int key;
+  struct node *next,*back;
+};
+typedef struct node Node;
+Node *getnode()
+{
+  return (Node *)malloc(sizeof(Node));
+}
+void enqueue(Node **front, Node **rear)
+{
+  Node *t;
+  int n,c;
+  scanf("%d%d",&n,&c);
+  while(n!=-1)
+  {
+    t=getnode();
+    t->key=n;
+    t->next=t->back=NULL;
+    if((*front)==NULL)
+    {
+      (*front)=t;
+      (*rear)=t;
+    }
+    else if(c==1)
+    {
+      t->next=(*front);
+      (*front)=t;
+    }
+    else if(c==2)
+    {
+      t->back=(*rear);
+      (*rear)=t;
+    }
+    scanf("%d%d",&n,&c);
+  }
+  printf("Front: %d Rear: %d",(*front)->key,(*rear)->key);
+}
+void dequeue(Node **front, Node **rear)
+{
+  int c;
+  Node *p;
+  scanf("%d",&c);
+  while((*front)!=NULL && (*rear)!=NULL)
+  {
+    if(c==1)
+    {
+      p=(*front);
+      if((*front)->next==(*rear))
+	(*front)=(*rear);
+      else if((*front)->next!=NULL)
+	(*front)=(*front)->next;
+      else
+      {
+	(*front)=NULL;
+	break;
+      }
+      free(p);
+    }
+
+
+    else if(c==2)
+    {
+      p=(*rear);
+      if((*rear)->back==(*front))
+	(*rear)=(*front);
+      else if((*rear)->back!=NULL)
+	(*rear)=(*rear)->back;
+      else
+      {
+	(*rear)=NULL;
+	break;
+      }
+      free(p);
+    }
+    if((*rear)==NULL)
+      (*front)=(*rear);
+    if((*front)==NULL)
+      (*rear)=(*front);
+    if((*front)!=NULL && (*rear)!=NULL)
+      printf("Front: %d Rear: %d\n",(*front)->key,(*rear)->key);
+    scanf("%d",&c);
+  }
+}
+void main()
+{
+  Node *front=NULL, *rear=NULL;
+  enqueue(&front,&rear);
+  printf("\nAdd elements\n");
+  enqueue(&front,&rear);
+  dequeue(&front,&rear);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+  int key,priority;
+  struct node *next;
+};
+typedef struct node Node;
+Node *getnode()
+{
+  return (Node *)malloc(sizeof(Node));
+}
+void enque(Node **front, Node **rear)
+{
+  Node *t;
+  int n,p;
+  scanf("%d%d",&n,&p);
+  while(n!=-1)
+  {
+    t=getnode();
+    t->key=n;
+    t->priority=p;
+    t->next=NULL;
+    if((*front)==NULL)
+    {
+      (*front)=t;
+      (*rear)=t;
+    }
+    else
+    {
+      (*rear)->next=t;
+      (*rear)=t;
+    }
+    scanf("%d%d",&n,&p);
+  }
+}
+void deque(Node **front)
+{
+  Node *p;
+  while((*front)!=NULL)
+  {
+    p=*front;
+    printf("%d:%d ",p->key,p->priority);
+    (*front)=(*front)->next;
+    free(p);
+  }
+} 
+void order(Node **front, Node **rear)
+{
+  Node *i,*j;
+  int k=0,a,b;
+  for(i=(*front);i->next!=NULL;i=i->next)
+  {
+    for(j=i->next;j!=NULL;j=j->next)
+    {
+      if(i->priority<j->priority)
+      {
+	a=i->key;
+	b=i->priority;
+	i->key=j->key;
+	i->priority=j->priority;
+	j->key=a;
+
+
+	j->priority=b;
+      }
+    }
+    if(k==0)
+      (*front)=i;
+    k++;
+  }
+  (*rear)=i;
+}
+int main()
+{
+  Node *front=NULL,*rear=NULL;
+  printf("Add elements with priority\n");
+  enque(&front,&rear);
+  order(&front,&rear);
+  deque(&front);
+  printf("\n");
+}
+
+
+
+
+
